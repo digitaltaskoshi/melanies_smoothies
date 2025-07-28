@@ -1,7 +1,7 @@
 # Import python packages
 import streamlit as st
 import requests
-# snoflake only: from snowflake.snowpark.context import get_active_session
+# snowflake only: from snowflake.snowpark.context import get_active_session
 from snowflake.snowpark.functions import col
 
 # Write directly to the app
@@ -18,7 +18,7 @@ name_on_order = st.text_input('Name on Smoothie:')
 st.write('The name on your Smoothie will be: ', name_on_order)
 
 # get data
-# snoflake only: session = get_active_session()
+# snowflake only: session = get_active_session()
 cnx = st.connection("snowflake")
 session = cnx.session()
 my_dataframe = session.table("smoothies.public.fruit_options").select(col('FRUIT_NAME'))
@@ -27,9 +27,7 @@ ingredients_list = st.multiselect(
     my_dataframe,
     max_selections=5
 )
-smoothiefroot_response = requests.get("https://fruityvice.com/api/fruit/watermelon")
-# st.text(smoothiefroot_response.json())
-sf_df = st.dataframe(data=smoothiefroot_response.json(), use_container_width=True)
+
 
 if ingredients_list:
     # st.write(ingredients_list)
@@ -39,6 +37,8 @@ if ingredients_list:
 
     for fruit_chosen in ingredients_list:
         ingredients_string += fruit_chosen + ' '
+        smoothiefroot_response = requests.get("https://fruityvice.com/api/fruit/watermelon")
+        sf_df = st.dataframe(data=smoothiefroot_response.json(), use_container_width=True)
 
     my_insert_stmt = """ insert into smoothies.public.orders(ingredients, name_on_order)
             values ('""" + ingredients_string + """','""" + name_on_order + """')"""
