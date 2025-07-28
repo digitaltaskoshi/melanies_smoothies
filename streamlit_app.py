@@ -19,7 +19,7 @@ st.write('The name on your Smoothie will be: ', name_on_order)
 # get data
 # snoflake only: session = get_active_session()
 cnx = st.connection("snowflake")
-session = cns.session()
+session = cnx.session()
 my_dataframe = session.table("smoothies.public.fruit_options").select(col('FRUIT_NAME'))
 ingredients_list = st.multiselect(
     'Choose up to 5 ingredients:',
