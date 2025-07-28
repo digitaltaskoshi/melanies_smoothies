@@ -2,6 +2,7 @@
 snowflake-snowpark-python
 streamlit
 requests
+pandas
 
 # SiS version:
 # name: app_environment
