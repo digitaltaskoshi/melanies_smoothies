@@ -28,7 +28,7 @@ ingredients_list = st.multiselect(
 )
 
 import requests
-smoothiefroot_response = requests.get("https://my.smoothiefroot.com/api/fruit/watermelon")
+smoothiefroot_response = requests.get("https://fruityvice.com/api/fruit/watermelon")
 st.text(smoothiefroot_response.json())
 
 if ingredients_list:
